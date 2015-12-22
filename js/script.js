@@ -42,7 +42,7 @@
 
         //sprite
         //params are pixel of width and height
-        game.load.spritesheet("zombie", "./assets/zombie.png", 31, 52);
+        game.load.spritesheet("zombie", "./assets/zombie.png", 33, 52);
 
         //audio
         //game.load.audio("sound", "./assets/8bit-thriller.mp3");
