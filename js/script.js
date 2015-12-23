@@ -54,6 +54,8 @@
       var scoreText;
 
       function create() {
+        //go fullscreen on mobile devices
+        if (!game.device.desktop){ game.input.onDown.add(gofull, this); }
         //enables arcade physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -176,7 +178,6 @@
 
         player.body.velocity.x = 0;
         //this is the movements for the sprite
-        game.input.onTap.add(function(e){
           if (game.input.pointer1.isDown) {
             if (Math.floor(game.input.x/(game.width/2)) === LEFT) {
               //move player left
@@ -192,7 +193,6 @@
               player.animations.stop();
               player.frame = 4;
           }
-        });
 
         if ((cursors.up.isDown || onSwipe()) && player.body.touching.down) {
           jumpTimes = 0;
