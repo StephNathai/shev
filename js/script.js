@@ -301,8 +301,10 @@
          window.onload= startGame();
        }
      }
+
+          function gofull() { game.scale.startFullScreen(false);}
   } // startGame
 
-     function gofull() { game.scale.startFullScreen(false);}
+
 
 })();
