@@ -13,6 +13,10 @@
       game.load.image('over', "./assets/gameover.png");
       game.load.image('lose', "./assets/lose.png");
       game.load.image('win', "./assets/win.png");
+
+      game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+      game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+      
     };
 
     var background;
@@ -120,10 +124,6 @@
 
        ledge = platforms.create((Math.random()*320)+ 600, 1800, "bone");
        ledge.body.immovable = true;
-
-       ledge = platforms.create(Math.random()*320, 2100, "bone");
-       ledge.body.immovable = true;
-
 
        //set player
 
