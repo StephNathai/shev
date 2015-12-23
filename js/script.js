@@ -1,6 +1,9 @@
 (function(){
-    //var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
-    var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+    var game = new Phaser.Game(windowWidth * window.devicePixelRatio, windowHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
+    // get users screen size
+
 
     function preload() {
       game.load.image('mainpage', "./assets/main.png");
@@ -16,8 +19,10 @@
 
     function create() {
       background = game.add.image(0, 0, "mainpage");
+      background.width = windowWidth
+      background.height = windowHeight;
       game.add.image(50, 75, 'title');
-      var button = game.add.button(game.world.centerX - 105, 325, 'button', actionOnClick, this, 2, 1, 0);
+      var button = game.add.button(game.world.centerX - 405, 325, 'button', actionOnClick, this, 2, 1, 0);
 
     };
 
@@ -32,7 +37,7 @@
   function startGame() {
       //creates an instance of Phaser.Game object
       // param width and height, render context,
-      var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
+      var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
 
       function preload() {
         //graphics
@@ -272,7 +277,7 @@
      }
 
      function gameEnd(){
-       var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
+       var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
 
        function preload() {
          game.load.image('mainpage', "./assets/main.png");
@@ -283,7 +288,7 @@
        };
 
        function create() {
-         background = game.add.image(0, 0, "mainpage").scale.setTo(1.25,1);
+         background = game.add.image(0, 0, "mainpage");
          //var start = game.add.text(16, 16, 'Start Game', {fill: '#FFF'});
          if (gameOver == true){
          game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
