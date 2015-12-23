@@ -1,6 +1,6 @@
 (function(){
     //var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
-    var game = new Phaser.Game("100%","100%", Phaser.AUTO, 'game', {preload: preload, create: create});
+    var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
 
     function preload() {
       game.load.image('mainpage', "./assets/main.png");
@@ -32,7 +32,7 @@
   function startGame() {
       //creates an instance of Phaser.Game object
       // param width and height, render context,
-      var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create, update: update});
+      var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
 
       function preload() {
         //graphics
@@ -272,7 +272,7 @@
      }
 
      function gameEnd(){
-       var game = new Phaser.Game(1280,720, Phaser.AUTO, 'game', {preload: preload, create: create});
+       var game = new Phaser.Game("100%","100%", Phaser.CANVAS, 'game', {preload: preload, create: create});
 
        function preload() {
          game.load.image('mainpage', "./assets/main.png");
