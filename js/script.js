@@ -54,8 +54,6 @@
       var scoreText;
 
       function create() {
-        //go fullscreen on mobile devices
-        if (!game.device.desktop){ game.input.onDown.add(gofull, this); }
         //enables arcade physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
