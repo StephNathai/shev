@@ -57,10 +57,10 @@
 
       function preload() {
         //graphics
-        game.load.image('dirt', "./assets/dirt.png");
-        game.load.image('bone', "./assets/platform.png");
-        game.load.image('pumpkin', "./assets/pumpkin.png");
-        game.load.image('corn', "./assets/candycorn.png");
+        game.load.image('snow', "./assets/snow.png");
+        game.load.image('platform', "./assets/platform.png");
+        game.load.image('monkey', "./assets/monkey.png");
+        game.load.image('bowl', "./assets/bowl.png");
         game.load.image('jump', "./assets/jump.png");
         game.load.image('left', "./assets/left.png");
         game.load.image('right', "./assets/right.png");
@@ -68,7 +68,7 @@
 
         //sprite
         //params are pixel of width and height
-        game.load.spritesheet("zombie", "./assets/zombie.png", 33, 52);
+        game.load.spritesheet("shev", "./assets/shev.png", 33, 52);
 
         //audio
         //game.load.audio("sound", "./assets/8bit-thriller.mp3");
@@ -88,7 +88,7 @@
         music.play();
 
         //scrolling background
-        var gameBackground = game.add.tileSprite(0, 0, windowWidth, windowHeight, 'dirt');
+        var gameBackground = game.add.tileSprite(0, 0, windowWidth, windowHeight, 'snow');
         gameBackground.autoScroll(0, 25);
 
         //set graphics
@@ -98,50 +98,50 @@
         platforms.enableBody = true;
 
         //creates ground, params are x-position, y-position, file
-       var ground = platforms.create(0, game.world.height - 40, "bone");
+       var ground = platforms.create(0, game.world.height - 40, "platform");
        ground.scale.setTo(2,2)
        //immovable holds item in place, providing collision for ground after jumping
        ground.body.immovable = true;
 
-       ground = platforms.create(375, game.world.height - 40, "bone");
+       ground = platforms.create(375, game.world.height - 40, "platform");
        ground.scale.setTo(2,2)
        ground.body.immovable = true;
 
-       ground = platforms.create(750, game.world.height - 40, "bone");
+       ground = platforms.create(750, game.world.height - 40, "platform");
        ground.scale.setTo(2,2)
        ground.body.immovable = true;
 
-       ground = platforms.create(1125, game.world.height - 40, "bone");
+       ground = platforms.create(1125, game.world.height - 40, "platform");
        ground.scale.setTo(2,2)
        ground.body.immovable = true;
 
-       var ledge = platforms.create(Math.random()*320, 300, "bone");
+       var ledge = platforms.create(Math.random()*320, 300, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+600, 600, "bone");
+       ledge = platforms.create((Math.random()*320)+600, 600, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 900, "bone");
+       ledge = platforms.create(Math.random()*320, 900, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+600, 900, "bone");
+       ledge = platforms.create((Math.random()*320)+600, 900, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 1200, "bone");
+       ledge = platforms.create(Math.random()*320, 1200, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 1500, "bone");
+       ledge = platforms.create(Math.random()*320, 1500, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+ 600, 1500, "bone");
+       ledge = platforms.create((Math.random()*320)+ 600, 1500, "platform");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+ 600, 1800, "bone");
+       ledge = platforms.create((Math.random()*320)+ 600, 1800, "platform");
        ledge.body.immovable = true;
 
        //set player
 
-       player = game.add.sprite(32, game.world.height - 150, "zombie");
+       player = game.add.sprite(32, game.world.height - 150, "shev");
        player.scale.setTo(1.5,1.5)
        //enables physics for player
        game.physics.arcade.enable(player);
@@ -180,26 +180,26 @@
 
 
 
-        //collect pumpkins
-        pumpkins = game.add.group()
-        pumpkins.enableBody = true;
+        //collect monkeys
+        monkeys = game.add.group()
+        monkeys.enableBody = true;
 
-        //number of pumpkins dropped
+        //number of monkeys dropped
         for (var i = 0; i < 10; i++) {
-            //params (spacing between pumpkins and y coordinate drop, file)
-            var pumpkin = pumpkins.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "pumpkin")
-            pumpkin.body.gravity.y = 125;
-            pumpkin.body.bounce.y = 0.4 + Math.random()*0.2;
+            //params (spacing between monkeys and y coordinate drop, file)
+            var monkey = monkeys.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "monkey")
+            monkey.body.gravity.y = 125;
+            monkey.body.bounce.y = 0.4 + Math.random()*0.2;
         }
 
-        corns = game.add.group()
-        corns.enableBody = true;
+        bowls = game.add.group()
+        bowls.enableBody = true;
 
         for (var i = 0; i < 10; i++) {
-            //params (spacing between pumpkins and y coordinate drop, file)
-            var corn = corns.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "corn")
-            corn.body.gravity.y = 125;
-            corn.body.bounce.y = 0.4 + Math.random()*0.2;
+            //params (spacing between monkeys and y coordinate drop, file)
+            var bowl = bowls.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "bowl")
+            bowl.body.gravity.y = 125;
+            bowl.body.bounce.y = 0.4 + Math.random()*0.2;
         }
 
         scoreText = game.add.text(16, 16, 'Score: 0', {fill: '#FFF'});
@@ -212,14 +212,14 @@
         cursors = game.input.keyboard.createCursorKeys()
         //player will land on the platforms
         game.physics.arcade.collide(player, platforms);
-        //pumpkins will land on the platforms
-        game.physics.arcade.collide(pumpkins, platforms);
+        //monkeys will land on the platforms
+        game.physics.arcade.collide(monkeys, platforms);
 
-        game.physics.arcade.collide(corns, platforms);
-        //check to see if player and pumpkin overlap
-        game.physics.arcade.overlap(player, pumpkins, collectPumpkin, null, this);
+        game.physics.arcade.collide(bowls, platforms);
+        //check to see if player and monkey overlap
+        game.physics.arcade.overlap(player, monkeys, collectmonkey, null, this);
 
-        game.physics.arcade.overlap(player, corns, collectCorn, null, this);
+        game.physics.arcade.overlap(player, bowls, collectbowl, null, this);
 
 
         player.body.velocity.x = 0;
@@ -252,17 +252,17 @@
       var restart = false;
       var gameOver = false;
 
-      function collectPumpkin(player, pumpkin){
-        //removes pumpkin when player collides
-        pumpkin.kill();
+      function collectmonkey(player, monkey){
+        //removes monkey when player collides
+        monkey.kill();
         score+=5;
         scoreText.text = 'Score: ' + score;
         scoring()
       }
 
-      function collectCorn(player, corn){
-        //removes pumpkin when player collides
-        corn.kill();
+      function collectbowl(player, bowl){
+        //removes monkey when player collides
+        bowl.kill();
         score+=10;
         scoreText.text = 'Score: ' + score;
         scoring()
@@ -279,7 +279,7 @@
       }
 
 
-     var timer = 3
+     var timer = 31;
 
 
      var myInterval = setInterval(function() {
