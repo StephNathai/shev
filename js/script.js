@@ -176,21 +176,23 @@
 
         player.body.velocity.x = 0;
         //this is the movements for the sprite
-        if (game.input.pointer1.isDown) {
-          if (Math.floor(game.input.x/(game.width/2)) === LEFT) {
-            //move player left
-            player.body.velocity.x = 200;
-            player.animations.play('right');
+        game.input.onTap.add(function(e){
+          if (game.input.pointer1.isDown) {
+            if (Math.floor(game.input.x/(game.width/2)) === LEFT) {
+              //move player left
+              player.body.velocity.x = 200;
+              player.animations.play('right');
+            }
+            if (Math.floor(game.input.x/(game.width/2)) === RIGHT) {
+              //move player right
+              player.body.velocity.x = -200;
+              player.animations.play('left');
+            }
+          } else {
+              player.animations.stop();
+              player.frame = 4;
           }
-          if (Math.floor(game.input.x/(game.width/2)) === RIGHT) {
-            //move player right
-            player.body.velocity.x = -200;
-            player.animations.play('left');
-          }
-        } else {
-            player.animations.stop();
-            player.frame = 4;
-        }
+        });
 
         if ((cursors.up.isDown || onSwipe()) && player.body.touching.down) {
           jumpTimes = 0;
