@@ -1,6 +1,6 @@
 (function(){
-    var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
-    //var game = new Phaser.Game(800,600, Phaser.AUTO, 'game', {preload: preload, create: create});
+    //var game = new Phaser.Game(window.innerWidth * window.devicePixelRatio, window.innerHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
+    var game = new Phaser.Game("100%","100%", Phaser.AUTO, 'game', {preload: preload, create: create});
 
     function preload() {
       game.load.image('mainpage', "./assets/main.png");
@@ -12,6 +12,7 @@
     };
 
     var background;
+    //scaleRatio = window.devicePixelRatio / 3;
 
     function create() {
       background = game.add.image(0, 0, "mainpage");
