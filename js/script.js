@@ -303,4 +303,6 @@
      }
   } // startGame
 
+     function gofull() { game.scale.startFullScreen(false);}
+
 })();
