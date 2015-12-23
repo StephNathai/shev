@@ -16,12 +16,14 @@
 
       game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-      
+
     };
 
     var background;
 
     function create() {
+      if (!game.device.desktop){ game.input.onDown.add(gofull, this); } //go fullscreen on mobile devices
+
       mainpageBackground = game.add.image(0, 0, "mainpage");
       mainpageBackground.width = windowWidth;
       mainpageBackground.height = windowHeight;
