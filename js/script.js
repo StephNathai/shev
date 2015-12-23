@@ -71,7 +71,7 @@
         game.load.spritesheet("zombie", "./assets/zombie.png", 33, 52);
 
         //audio
-        game.load.audio("sound", "./assets/8bit-thriller.mp3");
+        //game.load.audio("sound", "./assets/8bit-thriller.mp3");
 
       } //preload
 
@@ -279,13 +279,13 @@
       }
 
 
-     var timer = 31
+     var timer = 3
 
 
      var myInterval = setInterval(function() {
         timer --
         console.log(timer)
-        TimerText.text = 'Timer ' + timer
+        TimerText.text = 'Timer: ' + timer
         if (timer == 0) {
           // alert("you lose")
           gameOver = true;
@@ -318,13 +318,13 @@
          mainpageBackground.height = windowHeight;
          //var start = game.add.text(16, 16, 'Start Game', {fill: '#FFF'});
          if (gameOver == true){
-         game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
-         game.add.image(680, 100, 'lose').scale.setTo(0.5,0.5);
+         game.add.image(windowWidth/2 - 200, 100, 'over').scale.setTo(0.5,0.5);
+         game.add.image(windowWidth/2 - 250, 200, 'lose').scale.setTo(0.5,0.5);
          var button = game.add.button(game.world.centerX - 105, 325, 'again', actionOnClick, this, 2, 1, 0);
        } else if (restart == true){
-         game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
-          game.add.image(680, 100, 'win').scale.setTo(0.5,0.5);
-          var button = game.add.button(game.world.centerX - 105, 325, 'again', actionOnClick, this, 2, 1, 0);
+         game.add.image(windowWidth/2 - 200, 100, 'over').scale.setTo(0.5,0.5);
+          game.add.image(windowWidth/2 - 250, 200, 'win').scale.setTo(0.5,0.5);
+          var button = game.add.button(0, 0, 'again', actionOnClick, this, 2, 1, 0);
        }
        };
 
