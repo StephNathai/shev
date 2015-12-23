@@ -56,6 +56,17 @@
       function create() {
         //go fullscreen on mobile devices
         if (!game.device.desktop){ game.input.onDown.add(gofull, this); }
+        function gofull() {
+          if (game.scale.isFullScreen)
+          {
+              game.scale.stopFullScreen();
+          }
+          else
+          {
+              game.scale.startFullScreen(false);
+          }
+
+      }
         //enables arcade physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -159,6 +170,8 @@
         scoreText = game.add.text(16, 16, 'Score: 0', {fill: '#FFF'});
 
         TimerText = game.add.text(16, 38, 'Timer: 0', {fill: '#FFF'});
+
+
       } //create
 
       function update(){
@@ -203,7 +216,7 @@
           return (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250);
         }
 
-        function gofull() { game.scale.startFullScreen(false);}
+
 
         // if ( player.body.touching.down ) {
         //     jumpTimes = 0;
