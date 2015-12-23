@@ -56,17 +56,7 @@
       function create() {
         //go fullscreen on mobile devices
         if (!game.device.desktop){ game.input.onDown.add(gofull, this); }
-        function gofull() {
-          if (game.scale.isFullScreen)
-          {
-              game.scale.stopFullScreen();
-          }
-          else
-          {
-              game.scale.startFullScreen(false);
-          }
-
-      }
+        function gofull() { game.scale.startFullScreen(false);}
         //enables arcade physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
