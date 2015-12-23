@@ -25,12 +25,9 @@
       if (!game.device.desktop){ game.input.onDown.add(gofull, this); } //go fullscreen on mobile devices
 
       mainpageBackground = game.add.image(0, 0, "mainpage");
-      mainpageBackground.width = windowWidth;
-      mainpageBackground.height = windowHeight;
-      title = game.add.image(0, windowWidth/6, 'title');
-      title.width = windowWidth;
-      title.height = 200;
-      var button = game.add.button(windowWidth/2 - 100, windowHeight/2, 'button', actionOnClick, this, 2, 1, 0).scale.setTo(1.5,1.5);
+      title = game.add.image(0, 100, 'title');
+      title.width = game.world.width;
+      var button = game.add.button(game.world.centerX - 105, 425, 'button', actionOnClick, this, 2, 1, 0);
 
     };
 
@@ -76,7 +73,7 @@
         music.play();
 
         //scrolling background
-        var gameBackground = game.add.tileSprite(0, 0, windowWidth, windowHeight, 'dirt');
+        var gameBackground = game.add.tileSprite(0, 0, 800, 600, 'dirt');
         gameBackground.autoScroll(0, 25);
 
         //set graphics
@@ -281,8 +278,6 @@
 
        function create() {
          mainpageBackground = game.add.image(0, 0, "mainpage");
-         mainpageBackground.width = windowWidth;
-         mainpageBackground.height = windowHeight;
          //var start = game.add.text(16, 16, 'Start Game', {fill: '#FFF'});
          if (gameOver == true){
          game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
