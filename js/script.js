@@ -187,7 +187,7 @@
         //number of pumpkins dropped
         for (var i = 0; i < 10; i++) {
             //params (spacing between pumpkins and y coordinate drop, file)
-            var pumpkin = pumpkins.create( i * (windowWidth/10) , Math.random()* windowHeight, "pumpkin")
+            var pumpkin = pumpkins.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "pumpkin")
             pumpkin.body.gravity.y = 125;
             pumpkin.body.bounce.y = 0.4 + Math.random()*0.2;
         }
@@ -197,7 +197,7 @@
 
         for (var i = 0; i < 10; i++) {
             //params (spacing between pumpkins and y coordinate drop, file)
-            var corn = corns.create( i * (windowWidth/10) , Math.random()* 500, "corn")
+            var corn = corns.create( i * (windowWidth/10) , Math.random()* windowHeight - 100, "corn")
             corn.body.gravity.y = 125;
             corn.body.bounce.y = 0.4 + Math.random()*0.2;
         }
