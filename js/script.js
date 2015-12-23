@@ -54,6 +54,8 @@
       var scoreText;
 
       function create() {
+        //go fullscreen on mobile devices
+        if (!game.device.desktop){ game.input.onDown.add(gofull, this); }
         //enables arcade physics system
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
@@ -200,6 +202,8 @@
         function onSwipe() {
           return (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250);
         }
+
+        function gofull() { game.scale.startFullScreen(false);}
 
         // if ( player.body.touching.down ) {
         //     jumpTimes = 0;
