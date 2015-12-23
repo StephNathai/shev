@@ -176,23 +176,35 @@
 
         player.body.velocity.x = 0;
         //this is the movements for the sprite
-        if (cursors.left.isDown){
-            player.body.velocity.x = -200;
-
-            player.animations.play('left');
-        } else if (cursors.right.isDown){
+        if (game.input.pointer1.isDown) {
+          if (Math.floor(game.input.x/(game.width/2)) === LEFT) {
+            //move player left
             player.body.velocity.x = 200;
-
             player.animations.play('right');
+          }
+          if (Math.floor(game.input.x/(game.width/2)) === RIGHT) {
+            //move player right
+            player.body.velocity.x = -200;
+            player.animations.play('left');
+          }
         } else {
             player.animations.stop();
             player.frame = 4;
         }
 
-        if ( player.body.touching.down ) {
-            jumpTimes = 0;
-            }
+        if ((cursors.up.isDown || onSwipe()) && player.body.touching.down) {
+          jumpTimes = 0;
+          player.body.velocity.y = -450
+        }
 
+        function onSwipe() {
+          return (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250);
+        }
+
+        // if ( player.body.touching.down ) {
+        //     jumpTimes = 0;
+        //     }
+        //
         if ( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
             jumpTimes ++
               if (jumpTimes <= 2){
