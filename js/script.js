@@ -4,7 +4,12 @@
   console.log("width", windowWidth)
   console.log("height", windowHeight)
 
-    var game = new Phaser.Game(800,600, Phaser.AUTO, 'game', {preload: preload, create: create});
+  var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create});
+
+  var background;
+  var left = false;
+  var right = false;
+  var jump = false;
 
     function preload() {
       game.load.image('mainpage', "./assets/main.png");
@@ -13,21 +18,27 @@
       game.load.image('over', "./assets/gameover.png");
       game.load.image('lose', "./assets/lose.png");
       game.load.image('win', "./assets/win.png");
+      game.load.image('jump', "./assets/jump.png");
+      game.load.image('left', "./assets/left.png");
+      game.load.image('right', "./assets/right.png");
 
       game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
       game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 
     };
 
-    var background;
+
 
     function create() {
       if (!game.device.desktop){ game.input.onDown.add(gofull, this); } //go fullscreen on mobile devices
 
       mainpageBackground = game.add.image(0, 0, "mainpage");
-      title = game.add.image(0, 100, 'title');
-      title.width = game.world.width;
-      var button = game.add.button(game.world.centerX - 105, 425, 'button', actionOnClick, this, 2, 1, 0);
+      mainpageBackground.width = windowWidth;
+      mainpageBackground.height = windowHeight;
+      title = game.add.image(0, windowWidth/6, 'title');
+      title.width = windowWidth;
+      title.height = 200;
+      var startButton = game.add.button(windowWidth/2 - 100, windowHeight/2, 'button', actionOnClick, this, 2, 1, 0).scale.setTo(1.5,1.5);
 
     };
 
@@ -42,7 +53,7 @@
   function startGame() {
       //creates an instance of Phaser.Game object
       // param width and height, render context,
-      var game = new Phaser.Game(800,600, Phaser.AUTO, 'game', {preload: preload, create: create, update: update});
+      var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create, update: update});
 
       function preload() {
         //graphics
@@ -50,6 +61,10 @@
         game.load.image('bone', "./assets/platform.png");
         game.load.image('pumpkin', "./assets/pumpkin.png");
         game.load.image('corn', "./assets/candycorn.png");
+        game.load.image('jump', "./assets/jump.png");
+        game.load.image('left', "./assets/left.png");
+        game.load.image('right', "./assets/right.png");
+
 
         //sprite
         //params are pixel of width and height
@@ -73,7 +88,7 @@
         music.play();
 
         //scrolling background
-        var gameBackground = game.add.tileSprite(0, 0, 800, 600, 'dirt');
+        var gameBackground = game.add.tileSprite(0, 0, windowWidth, windowHeight, 'dirt');
         gameBackground.autoScroll(0, 25);
 
         //set graphics
@@ -90,15 +105,15 @@
 
        ground = platforms.create(375, game.world.height - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
        ground = platforms.create(750, game.world.height - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
        ground = platforms.create(1125, game.world.height - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
        var ledge = platforms.create(Math.random()*320, 300, "bone");
        ledge.body.immovable = true;
@@ -132,7 +147,7 @@
        game.physics.arcade.enable(player);
 
        //gives player physics properties
-        player.body.bounce.y = .5;
+        player.body.bounce.y = .2;
         player.body.gravity.y = 600;
         player.body.collideWorldBounds = true;
 
@@ -142,6 +157,29 @@
 
         //this is controls, (arrow Keys)
 
+        var jumpButton = game.add.button(game.world.width-100, game.world.height-100, 'jump', null, this, 0, 1, 0, 1);
+        //game, x, y, key, callback, callbackContext, overFrame, outFrame, downFrame, upFrame
+        jumpButton.events.onInputOver.add(function(){jump=false;});
+        jumpButton.events.onInputOut.add(function(){jump=false;});
+        jumpButton.events.onInputDown.add(function(){jump=true;});
+        jumpButton.events.onInputUp.add(function(){jump=false;});
+
+        var leftButton = game.add.button(0, game.world.height-110, 'left', null, this, 0, 1, 0 ,1);
+        leftButton.scale.setTo(0.25, 0.25);
+        leftButton.events.onInputOver.add(function(){left=true;});
+        leftButton.events.onInputOut.add(function(){left=false;});
+        leftButton.events.onInputDown.add(function(){left=true;});
+        leftButton.events.onInputUp.add(function(){left=false;});
+
+        var rightButton = game.add.button(120, game.world.height-110, 'right', null, this, 0, 1, 0 ,1);
+        rightButton.scale.setTo(0.25, 0.25);
+        rightButton.events.onInputOver.add(function(){right=true;});
+        rightButton.events.onInputOut.add(function(){right=false;});
+        rightButton.events.onInputDown.add(function(){right=true;});
+        rightButton.events.onInputUp.add(function(){right=false;});
+
+
+
         //collect pumpkins
         pumpkins = game.add.group()
         pumpkins.enableBody = true;
@@ -149,7 +187,7 @@
         //number of pumpkins dropped
         for (var i = 0; i < 10; i++) {
             //params (spacing between pumpkins and y coordinate drop, file)
-            var pumpkin = pumpkins.create( i * 120 , Math.random()* 500, "pumpkin")
+            var pumpkin = pumpkins.create( i * (windowWidth/10) , Math.random()* windowHeight, "pumpkin")
             pumpkin.body.gravity.y = 125;
             pumpkin.body.bounce.y = 0.4 + Math.random()*0.2;
         }
@@ -159,7 +197,7 @@
 
         for (var i = 0; i < 10; i++) {
             //params (spacing between pumpkins and y coordinate drop, file)
-            var corn = corns.create( i * 130 , Math.random()* 500, "corn")
+            var corn = corns.create( i * (windowWidth/10) , Math.random()* 500, "corn")
             corn.body.gravity.y = 125;
             corn.body.bounce.y = 0.4 + Math.random()*0.2;
         }
@@ -186,13 +224,11 @@
 
         player.body.velocity.x = 0;
         //this is the movements for the sprite
-        if (cursors.left.isDown){
+        if (cursors.left.isDown || left){
             player.body.velocity.x = -200;
-
             player.animations.play('left');
-        } else if (cursors.right.isDown){
+        } else if (cursors.right.isDown || right){
             player.body.velocity.x = 200;
-
             player.animations.play('right');
         } else {
             player.animations.stop();
@@ -203,10 +239,10 @@
             jumpTimes = 0;
             }
 
-        if ( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+        if ( game.input.keyboard.isDown(Phaser.Keyboard.UP) || jump) {
             jumpTimes ++
               if (jumpTimes <= 2){
-               player.body.velocity.y = -850;
+               player.body.velocity.y = -650;
               }
             }
 
@@ -266,7 +302,7 @@
      }
 
      function gameEnd(){
-       var game = new Phaser.Game(800,600, Phaser.AUTO, 'game', {preload: preload, create: create});
+       var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create});
 
        function preload() {
          game.load.image('mainpage', "./assets/main.png");
@@ -278,6 +314,8 @@
 
        function create() {
          mainpageBackground = game.add.image(0, 0, "mainpage");
+         mainpageBackground.width = windowWidth;
+         mainpageBackground.height = windowHeight;
          //var start = game.add.text(16, 16, 'Start Game', {fill: '#FFF'});
          if (gameOver == true){
          game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
@@ -296,10 +334,8 @@
          window.onload= startGame();
        }
      }
-
-
   } // startGame
-      function gofull() { game.scale.startFullScreen(false);}
 
+     function gofull() { game.scale.startFullScreen(false);}
 
 })();
