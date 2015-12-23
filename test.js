@@ -1,10 +1,10 @@
 (function(){
-  windowWidth = window.innerWidth;
-  windowHeight = window.innerHeight;
-  console.log("width", windowWidth)
-  console.log("height", windowHeight)
+    windowWidth = window.innerWidth;
+    windowHeight = window.innerHeight;
+    console.log(windowWidth, windowHeight)
+    var game = new Phaser.Game(windowWidth * window.devicePixelRatio, windowHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
+    // get users screen size
 
-    var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create});
 
     function preload() {
       game.load.image('mainpage', "./assets/main.png");
@@ -15,7 +15,8 @@
       game.load.image('win', "./assets/win.png");
     };
 
-    var background;
+    var mainpageBackground;
+    //scaleRatio = window.devicePixelRatio / 3;
 
     function create() {
       mainpageBackground = game.add.image(0, 0, "mainpage");
@@ -39,7 +40,7 @@
   function startGame() {
       //creates an instance of Phaser.Game object
       // param width and height, render context,
-      var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create, update: update});
+      var game = new Phaser.Game(windowWidth * window.devicePixelRatio, windowHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
 
       function preload() {
         //graphics
@@ -53,7 +54,7 @@
         game.load.spritesheet("zombie", "./assets/zombie.png", 33, 52);
 
         //audio
-        game.load.audio("sound", "./assets/8bit-thriller.mp3");
+        //game.load.audio("sound", "./assets/8bit-thriller.mp3");
 
       } //preload
 
@@ -66,8 +67,8 @@
         game.physics.startSystem(Phaser.Physics.ARCADE);
 
         //sound play
-        var music = game.add.audio("sound")
-        music.play();
+        //var music = game.add.audio("sound")
+        //music.play();
 
         //scrolling background
         var gameBackground = game.add.tileSprite(0, 0, windowWidth, windowHeight, 'dirt');
@@ -80,36 +81,63 @@
         platforms.enableBody = true;
 
         //creates ground, params are x-position, y-position, file
-       var ground = platforms.create(0, game.world.height - 40, "bone");
+       var ground = platforms.create(0, windowHeight - 40, "bone");
        ground.scale.setTo(2,2)
        //immovable holds item in place, providing collision for ground after jumping
        ground.body.immovable = true;
 
-       ground = platforms.create(375, game.world.height - 40, "bone");
+       ground = platforms.create(375, windowHeight - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
-       ground = platforms.create(750, game.world.height - 40, "bone");
+       ground = platforms.create(750, windowHeight - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
-       ground = platforms.create(1125, game.world.height - 40, "bone");
+       ground = platforms.create(1125, windowHeight - 40, "bone");
        ground.scale.setTo(2,2)
-       ground.body.immovable = false;
+       ground.body.immovable = true;
 
-       var ledge = platforms.create(Math.random()*320, 300, "bone");
+       var ledge = platforms.create(Math.random()*320, 550, "bone");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+600, 600, "bone");
+       ledge = platforms.create((Math.random()*320)+600, 550, "bone");
        ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 900, "bone");
+       ledge = platforms.create(Math.random()*320, 425, "bone");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+600, 900, "bone");
+       ledge = platforms.create((Math.random()*320)+600, 425, "bone");
        ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 1200, "bone");
+       ledge = platforms.create(Math.random()*320, 300, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create((Math.random()*320)+600, 300, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create(Math.random()*320, 175, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create((Math.random()*320)+ 600, 175, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create(Math.random()*320, 675, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create((Math.random()*320)+ 600, 675, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create(Math.random()*320, 800, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create((Math.random()*320)+ 600, 800, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create(Math.random()*320, 925, "bone");
+       ledge.body.immovable = true;
+
+       ledge = platforms.create((Math.random()*320)+ 600, 925, "bone");
        ledge.body.immovable = true;
 
        ledge = platforms.create(Math.random()*320, 1500, "bone");
@@ -118,23 +146,21 @@
        ledge = platforms.create((Math.random()*320)+ 600, 1500, "bone");
        ledge.body.immovable = true;
 
-       ledge = platforms.create((Math.random()*320)+ 600, 1800, "bone");
-       ledge.body.immovable = true;
 
-       ledge = platforms.create(Math.random()*320, 2100, "bone");
-       ledge.body.immovable = true;
+
+
 
 
        //set player
 
-       player = game.add.sprite(32, game.world.height - 150, "zombie");
+       player = game.add.sprite(32, windowHeight - 150, "zombie");
        player.scale.setTo(1.5,1.5)
        //enables physics for player
        game.physics.arcade.enable(player);
 
        //gives player physics properties
-        player.body.bounce.y = .5;
-        player.body.gravity.y = 600;
+        player.body.bounce.y = .2;
+        player.body.gravity.y = 300;
         player.body.collideWorldBounds = true;
 
         // Our animations for walking left and right
@@ -168,6 +194,8 @@
         scoreText = game.add.text(16, 16, 'Score: 0', {fill: '#FFF'});
 
         TimerText = game.add.text(16, 38, 'Timer: 0', {fill: '#FFF'});
+
+
       } //create
 
       function update(){
@@ -185,31 +213,71 @@
         game.physics.arcade.overlap(player, corns, collectCorn, null, this);
 
 
+        // player.body.velocity.x = 0;
+        // //this is the movements for the sprite
+        //   if (game.input.pointer1.isDown) {
+        //     if (Math.floor(game.input.x/(windowWidth/2)) === LEFT) {
+        //       //move player left
+        //       player.body.velocity.x = 200;
+        //       player.animations.play('right');
+        //     }
+        //     if (Math.floor(game.input.x/(windowWidth/2)) === RIGHT) {
+        //       //move player right
+        //       player.body.velocity.x = -200;
+        //       player.animations.play('left');
+        //     }
+        //   } else {
+        //       player.animations.stop();
+        //       player.frame = 4;
+        //   }
+        //
+        // if ((cursors.up.isDown || onSwipe()) && player.body.touching.down) {
+        //   jumpTimes = 0;
+        //   player.body.velocity.y = -450
+        // }
+        //
+        // function onSwipe() {
+        //   return (Phaser.Point.distance(game.input.activePointer.position, game.input.activePointer.positionDown) > 150 && game.input.activePointer.duration > 100 && game.input.activePointer.duration < 250);
+        // }
+        //
+        //
+        //
+        // // if ( player.body.touching.down ) {
+        // //     jumpTimes = 0;
+        // //     }
+        // //
+        // if ( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+        //     jumpTimes ++
+        //       if (jumpTimes <= 2){
+        //        player.body.velocity.y = -450;
+        //       }
+        //     }
         player.body.velocity.x = 0;
-        //this is the movements for the sprite
-        if (cursors.left.isDown){
-            player.body.velocity.x = -200;
+               //this is the movements for the sprite
+               if (cursors.left.isDown){
+                   player.body.velocity.x = -200;
 
-            player.animations.play('left');
-        } else if (cursors.right.isDown){
-            player.body.velocity.x = 200;
+                   player.animations.play('left');
+               } else if (cursors.right.isDown){
+                   player.body.velocity.x = 200;
 
-            player.animations.play('right');
-        } else {
-            player.animations.stop();
-            player.frame = 4;
-        }
+                   player.animations.play('right');
+               } else {
+                   player.animations.stop();
+                   player.frame = 4;
+               }
 
-        if ( player.body.touching.down ) {
-            jumpTimes = 0;
-            }
+               if ( player.body.touching.down ) {
+                   jumpTimes = 0;
+                   }
 
-        if ( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
-            jumpTimes ++
-              if (jumpTimes <= 2){
-               player.body.velocity.y = -850;
-              }
-            }
+               if ( game.input.keyboard.isDown(Phaser.Keyboard.UP)) {
+                   jumpTimes ++
+                     if (jumpTimes <= 2){
+                      player.body.velocity.y = -450;
+                     }
+                   }
+
 
 
 
@@ -243,7 +311,6 @@
         }
       }
 
-
      var timer = 31
 
 
@@ -267,7 +334,7 @@
      }
 
      function gameEnd(){
-       var game = new Phaser.Game(windowWidth,windowHeight, Phaser.AUTO, 'game', {preload: preload, create: create});
+       var game = new Phaser.Game(windowWidth * window.devicePixelRatio, windowHeight * window.devicePixelRatio, Phaser.CANVAS, 'game', {preload: preload, create: create});
 
        function preload() {
          game.load.image('mainpage', "./assets/main.png");
@@ -285,11 +352,11 @@
          if (gameOver == true){
          game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
          game.add.image(680, 100, 'lose').scale.setTo(0.5,0.5);
-         var button = game.add.button(game.world.centerX - 105, 325, 'again', actionOnClick, this, 2, 1, 0);
+         var button = game.add.button(windowWidth/2 - 100, windowHeight/2, 'button', actionOnClick, this, 2, 1, 0).scale.setTo(1.5,1.5);
        } else if (restart == true){
          game.add.image(80, 100, 'over').scale.setTo(0.5,0.5);
           game.add.image(680, 100, 'win').scale.setTo(0.5,0.5);
-          var button = game.add.button(game.world.centerX - 105, 325, 'again', actionOnClick, this, 2, 1, 0);
+          var button = game.add.button(windowWidth/2 - 100, windowHeight/2, 'button', actionOnClick, this, 2, 1, 0).scale.setTo(1.5,1.5);
        }
        };
 
